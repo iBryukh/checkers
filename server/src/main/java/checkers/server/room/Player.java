@@ -53,8 +53,6 @@ public class Player {
     public void endConnection(){
         try {
             if (outputStream != null) {
-                outputStream.writeUTF("connection closed");
-                outputStream.flush();
                 outputStream.close();
             }
         } catch (Exception e){

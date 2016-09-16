@@ -7,7 +7,27 @@ import java.io.Serializable;
  */
 public class ChangeObject implements Serializable {
 
+    private Board board;
+
+    private Step step;
+
     private String message;
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public Step getStep() {
+        return step;
+    }
+
+    public void setStep(Step step) {
+        this.step = step;
+    }
 
     public String getMessage() {
         return message;
@@ -20,7 +40,9 @@ public class ChangeObject implements Serializable {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("ChangeObject{");
-        sb.append("message='").append(message).append('\'');
+        sb.append("board=").append(board);
+        sb.append(", step=").append(step);
+        sb.append(", message='").append(message).append('\'');
         sb.append('}');
         return sb.toString();
     }

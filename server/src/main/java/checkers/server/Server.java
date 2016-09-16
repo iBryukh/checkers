@@ -18,11 +18,10 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(port(args));
             Player player = new Player(serverSocket.accept());
 
-            System.out.println(player.read());
-
             ChangeObject object = new ChangeObject();
             object.setMessage("server");
             player.write(object);
+            System.out.println(player.read());
             player.endConnection();
             serverSocket.close();
         } catch (IOException e) {
