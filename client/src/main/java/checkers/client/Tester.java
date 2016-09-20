@@ -10,17 +10,16 @@ public class Tester {
 
     public static void main(String[] args){
         Client client = new Client(new CheckersBot() {
-            @Override
-            Step next(Board board) {
+
+            public Step next(Board board) {
                 return new Step();
             }
 
-            @Override
-            void onGameEnd(String message){
+
+            public void onGameEnd(String message){
                 System.out.println(message);
             }
         });
         client.run();
     }
-
 }

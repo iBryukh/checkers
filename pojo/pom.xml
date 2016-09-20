@@ -13,5 +13,51 @@
     <artifactId>pojo</artifactId>
     <version>1.0</version>
 
+    <distributionManagement>
+        <repository>
+            <id>pojo-write-url</id>
+            <url>https://mymavenrepo.com/repo/49q5oQAutyTl718Nu7gQ/</url>
+        </repository>
+        <snapshotRepository>
+            <id>pojo-write-url</id>
+            <url>https://mymavenrepo.com/repo/49q5oQAutyTl718Nu7gQ/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>deploy</phase>
+                        <goals><goal>jar-no-fork</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>deploy</phase>
+                        <goals><goal>jar</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>deploy</phase>
+                        <goals><goal>deploy</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
