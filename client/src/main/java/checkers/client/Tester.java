@@ -1,7 +1,7 @@
 package checkers.client;
 
-import checkers.pojo.Board;
-import checkers.pojo.Step;
+import checkers.pojo.board.Board;
+import checkers.pojo.step.Step;
 
 /**
  * Created by oleh_kurpiak on 16.09.2016.

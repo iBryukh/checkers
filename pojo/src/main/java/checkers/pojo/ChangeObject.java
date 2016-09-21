@@ -1,5 +1,8 @@
 package checkers.pojo;
 
+import checkers.pojo.board.Board;
+import checkers.pojo.step.Step;
+
 import java.io.Serializable;
 
 /**

@@ -1,8 +1,7 @@
 package checkers.client;
 
-import checkers.pojo.Board;
 import checkers.pojo.ChangeObject;
-import checkers.pojo.Step;
+import checkers.pojo.step.Step;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
