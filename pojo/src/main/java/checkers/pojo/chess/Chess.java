@@ -34,4 +34,14 @@ public class Chess implements Serializable {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Chess{");
+        sb.append("color=").append(color);
+        sb.append(", type=").append(type);
+        sb.append(", position=").append(position);
+        sb.append('}');
+        return sb.toString();
+    }
 }

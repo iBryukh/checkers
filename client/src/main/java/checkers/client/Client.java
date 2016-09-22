@@ -39,25 +39,35 @@ public class Client {
             this.inputStream = new ObjectInputStream(socket.getInputStream());
             this.bot = bot;
         } catch (IOException e) {
+            e.printStackTrace();
             endConnection();
         }
     }
 
     public void run(){
+        //write client name
+        write(bot.clientBotName());
+
+        // get player color
+        ChangeObject onStartRead = read();
+        if(onStartRead == null){
+            endConnection();
+            return;
+        }
+
+        bot.onGameStart(onStartRead.getPlayerColor());
+
+
         while (true){
             ChangeObject object = read();
             if(object == null) {
                 bot.onGameEnd(CONNECTION_CLOSED);
                 break;
             }
-            System.out.println(object.getMessage());
-            Step step = bot.next(object.getBoard());
-            object = new ChangeObject();
-            object.setStep(step);
-            object.setMessage("client");
-            write(object);
-        }
 
+            Step step = bot.next(object.getBoard());
+            write(new ChangeObject().step(step));
+        }
         endConnection();
     }
 
@@ -76,8 +86,15 @@ public class Client {
             outputStream.writeObject(object);
             outputStream.flush();
         } catch (Exception e){
+            e.printStackTrace();
             endConnection();
         }
+    }
+
+    private void write(String message){
+        ChangeObject object = new ChangeObject();
+        object.setMessage(message);
+        write(object);
     }
 
     private void endConnection(){

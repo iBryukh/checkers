@@ -7,20 +7,29 @@ import java.io.Serializable;
  */
 public enum Numbers implements Serializable {
 
-    _1,
+    _1(true),
 
-    _2,
+    _2(false),
 
-    _3,
+    _3(true),
 
-    _4,
+    _4(false),
 
-    _5,
+    _5(true),
 
-    _6,
+    _6(false),
 
-    _7,
+    _7(true),
 
-    _8
+    _8(false);
 
+    private boolean odd;
+
+    Numbers(boolean odd){
+        this.odd = odd;
+    }
+
+    public boolean isOdd(){
+        return odd;
+    }
 }

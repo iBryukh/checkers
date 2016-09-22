@@ -5,9 +5,9 @@ import checkers.pojo.chess.ChessColor;
 import checkers.pojo.step.Step;
 
 /**
- * Created by oleh_kurpiak on 16.09.2016.
+ * Created by oleh_kurpiak on 22.09.2016.
  */
-public class Tester {
+public class Tester1 {
 
     public static void main(String[] args){
         Client client = new Client(new CheckersBot() {
@@ -25,10 +25,11 @@ public class Tester {
             }
 
             public String clientBotName() {
-                return "tester";
+                return "tester1";
             }
 
         });
         client.run();
     }
+
 }

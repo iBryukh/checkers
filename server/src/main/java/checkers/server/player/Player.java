@@ -1,4 +1,4 @@
-package checkers.server.room;
+package checkers.server.player;
 
 import checkers.pojo.ChangeObject;
 
@@ -18,11 +18,14 @@ public class Player {
 
     private ObjectOutputStream outputStream;
 
+    private boolean connected;
+
     public Player(Socket socket){
         try {
             this.socket = socket;
             this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
+            connected = true;
         } catch (Exception e){
             endConnection();
         }
@@ -42,15 +45,26 @@ public class Player {
     }
 
     public void write(ChangeObject object){
+        if(!isConnected())
+            return;
+
         try {
             outputStream.writeObject(object);
             outputStream.flush();
         } catch (Exception e){
+            e.printStackTrace();
             endConnection();
         }
     }
 
+    public void write(String message){
+        ChangeObject object = new ChangeObject();
+        object.setMessage(message);
+        write(object);
+    }
+
     public void endConnection(){
+        connected = false;
         try {
             if (outputStream != null) {
                 outputStream.close();
@@ -74,4 +88,7 @@ public class Player {
         }
     }
 
+    public boolean isConnected() {
+        return connected;
+    }
 }

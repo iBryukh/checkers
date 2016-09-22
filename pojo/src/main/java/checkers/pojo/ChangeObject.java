@@ -1,6 +1,7 @@
 package checkers.pojo;
 
 import checkers.pojo.board.Board;
+import checkers.pojo.chess.ChessColor;
 import checkers.pojo.step.Step;
 
 import java.io.Serializable;
@@ -15,6 +16,8 @@ public class ChangeObject implements Serializable {
     private Step step;
 
     private String message;
+
+    private ChessColor playerColor;
 
     public Board getBoard() {
         return board;
@@ -38,6 +41,34 @@ public class ChangeObject implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public ChessColor getPlayerColor() {
+        return playerColor;
+    }
+
+    public void setPlayerColor(ChessColor playerColor) {
+        this.playerColor = playerColor;
+    }
+
+    public ChangeObject board(Board board){
+        this.board = board;
+        return this;
+    }
+
+    public ChangeObject step(Step step){
+        this.step = step;
+        return this;
+    }
+
+    public ChangeObject message(String message){
+        this.message = message;
+        return this;
+    }
+
+    public ChangeObject playerColor(ChessColor color){
+        this.playerColor = color;
+        return this;
     }
 
     @Override

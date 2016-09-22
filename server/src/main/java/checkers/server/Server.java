@@ -1,7 +1,8 @@
 package checkers.server;
 
 import checkers.pojo.ChangeObject;
-import checkers.server.room.Player;
+import checkers.server.player.Player;
+import checkers.server.room.GameRoom;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,13 +17,11 @@ public class Server {
     public static void main(String[] args){
         try {
             ServerSocket serverSocket = new ServerSocket(port(args));
-            Player player = new Player(serverSocket.accept());
+            GameRoom room = new GameRoom(new Player(serverSocket.accept()));
+            room.setSecondPlayer(new Player(serverSocket.accept()));
+            while (room.isGameRun()){
 
-            ChangeObject object = new ChangeObject();
-            object.setMessage("server");
-            player.write(object);
-            System.out.println(player.read());
-            player.endConnection();
+            }
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
