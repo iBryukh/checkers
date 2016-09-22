@@ -92,6 +92,10 @@ public class GameRoom implements Runnable {
         }
     }
 
+    public int ID(){
+        return GAME_ROOM_ID;
+    }
+
     public void run() {
         System.out.println(String.format("GAME ROOM %d: game started", GAME_ROOM_ID));
         // main game loop here

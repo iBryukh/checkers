@@ -62,21 +62,18 @@ public class Player {
                 outputStream.close();
             }
         } catch (Exception e){
-            e.printStackTrace();
         }
 
         try {
             if(inputStream != null)
                 inputStream.close();
         } catch (Exception e){
-            e.printStackTrace();
         }
 
         try {
             if(socket != null)
                 socket.close();
         } catch (Exception e){
-            e.printStackTrace();
         }
     }
 
