@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class GameRoom implements Runnable {
 
-    public final int GAME_ROOM_ID = 1;
+    public final int GAME_ROOM_ID;
 
     private Player firstPlayer;
     private String firstPlayerName;
@@ -33,7 +33,8 @@ public class GameRoom implements Runnable {
 
     private volatile boolean gameRun = true;
 
-    public GameRoom(Player first){
+    public GameRoom(Player first, int id){
+        this.GAME_ROOM_ID = id;
         this.firstPlayer = first;
         if(firstPlayer.isConnected()){
             firstPlayerName = firstPlayer.read().getMessage();
@@ -101,10 +102,10 @@ public class GameRoom implements Runnable {
         while (gameRun){
             if(turn){
                 firstPlayer.write(new ChangeObject().board(board));
-                System.out.println(firstPlayer.read());
+                firstPlayer.read();
             } else {
                 secondPlayer.write(new ChangeObject().board(board));
-                System.out.println(secondPlayer.read());
+                secondPlayer.read();
             }
 
             turn = !turn;
@@ -113,5 +114,12 @@ public class GameRoom implements Runnable {
                 gameRun = false;
             }
         }
+
+        ChangeObject object = new ChangeObject();
+        object.setEnd(true);
+        firstPlayer.write(object);
+        secondPlayer.write(object);
+
+        System.out.println(String.format("GAME ROOM %d: game ended", GAME_ROOM_ID));
     }
 }

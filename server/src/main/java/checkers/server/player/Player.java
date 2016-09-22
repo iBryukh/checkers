@@ -33,13 +33,12 @@ public class Player {
 
     public ChangeObject read(){
         try {
-            ChangeObject object = (ChangeObject)inputStream.readObject();
-            return object;
+            return (ChangeObject)inputStream.readObject();
         } catch (IOException e) {
-            e.printStackTrace();
+            endConnection();
             return null;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            endConnection();
             return null;
         }
     }
@@ -52,15 +51,8 @@ public class Player {
             outputStream.writeObject(object);
             outputStream.flush();
         } catch (Exception e){
-            e.printStackTrace();
             endConnection();
         }
-    }
-
-    public void write(String message){
-        ChangeObject object = new ChangeObject();
-        object.setMessage(message);
-        write(object);
     }
 
     public void endConnection(){

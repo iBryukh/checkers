@@ -3,6 +3,7 @@ package checkers.server;
 import checkers.pojo.ChangeObject;
 import checkers.server.player.Player;
 import checkers.server.room.GameRoom;
+import checkers.server.room.GameRoomsContainer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,14 +16,13 @@ public class Server {
     public static final int DEFAULT_PORT = 3000;
 
     public static void main(String[] args){
+        GameRoomsContainer container = new GameRoomsContainer();
         try {
             ServerSocket serverSocket = new ServerSocket(port(args));
-            GameRoom room = new GameRoom(new Player(serverSocket.accept()));
-            room.setSecondPlayer(new Player(serverSocket.accept()));
-            while (room.isGameRun()){
-
+            while (true){
+                Player player = new Player(serverSocket.accept());
+                container.addPlayer(player);
             }
-            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

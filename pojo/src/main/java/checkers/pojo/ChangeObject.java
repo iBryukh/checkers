@@ -19,6 +19,8 @@ public class ChangeObject implements Serializable {
 
     private ChessColor playerColor;
 
+    private boolean end;
+
     public Board getBoard() {
         return board;
     }
@@ -51,6 +53,14 @@ public class ChangeObject implements Serializable {
         this.playerColor = playerColor;
     }
 
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+
     public ChangeObject board(Board board){
         this.board = board;
         return this;
@@ -68,6 +78,11 @@ public class ChangeObject implements Serializable {
 
     public ChangeObject playerColor(ChessColor color){
         this.playerColor = color;
+        return this;
+    }
+
+    public ChangeObject end(boolean end){
+        this.end = end;
         return this;
     }
 

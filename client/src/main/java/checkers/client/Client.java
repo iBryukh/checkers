@@ -49,18 +49,19 @@ public class Client {
         write(bot.clientBotName());
 
         // get player color
-        ChangeObject onStartRead = read();
-        if(onStartRead == null){
+        ChangeObject object = read();
+        if(object == null){
             endConnection();
             return;
         }
 
-        bot.onGameStart(onStartRead.getPlayerColor());
+        bot.onGameStart(object.getPlayerColor());
 
 
         while (true){
-            ChangeObject object = read();
-            if(object == null) {
+            object = read();
+            if(object == null || object.isEnd()) {
+                System.out.println("END");
                 bot.onGameEnd(CONNECTION_CLOSED);
                 break;
             }
