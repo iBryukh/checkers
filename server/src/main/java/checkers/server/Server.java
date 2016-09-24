@@ -15,10 +15,21 @@ public class Server {
 
     public static final int DEFAULT_PORT = 3000;
 
-    public static void main(String[] args){
-        GameRoomsContainer container = new GameRoomsContainer();
+    private GameRoomsContainer container;
+    private int port;
+
+    public Server(){
+        this(DEFAULT_PORT);
+    }
+
+    public Server(int port){
+        this.container = new GameRoomsContainer();
+        this.port = port;
+    }
+
+    public void run(){
         try {
-            ServerSocket serverSocket = new ServerSocket(port(args));
+            ServerSocket serverSocket = new ServerSocket(port);
             while (true){
                 Player player = new Player(serverSocket.accept());
                 container.addPlayer(player);
@@ -26,18 +37,6 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static int port(String[] args){
-        int port = DEFAULT_PORT;
-        if(args != null && args.length > 0){
-            try {
-                port = Integer.parseInt(args[0]);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return port;
     }
 
 }
