@@ -1,29 +1,29 @@
-package checkers.pojo.chess;
+package checkers.pojo.checker;
 
 import java.io.Serializable;
 
 /**
  * Created by oleh_kurpiak on 21.09.2016.
  */
-public class Chess implements Serializable {
+public class Checker implements Serializable {
 
-    private final ChessColor color;
+    private final CheckerColor color;
 
-    private final ChessType type;
+    private CheckerType type;
 
     private Position position;
 
-    public Chess(ChessColor color, ChessType type, Position position) {
+    public Checker(CheckerColor color, CheckerType type, Position position) {
         this.color = color;
         this.type = type;
         this.position = position;
     }
 
-    public ChessColor getColor() {
+    public CheckerColor getColor() {
         return color;
     }
 
-    public ChessType getType() {
+    public CheckerType getType() {
         return type;
     }
 
@@ -35,9 +35,13 @@ public class Chess implements Serializable {
         this.position = position;
     }
 
+    public void setType(CheckerType type){
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Chess{");
+        final StringBuffer sb = new StringBuffer("Checker{");
         sb.append("color=").append(color);
         sb.append(", type=").append(type);
         sb.append(", position=").append(position);

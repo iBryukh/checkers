@@ -1,7 +1,7 @@
 package checkers.client;
 
 import checkers.pojo.board.Board;
-import checkers.pojo.chess.ChessColor;
+import checkers.pojo.checker.CheckerColor;
 import checkers.pojo.step.Step;
 
 /**
@@ -11,9 +11,9 @@ public interface CheckersBot {
 
     /**
      * executes before start of the main game loop
-     * @param color - the color of chess which player will use for steps
+     * @param color - the color of checker which player will use for steps
      */
-    void onGameStart(ChessColor color);
+    void onGameStart(CheckerColor color);
 
     /**
      *

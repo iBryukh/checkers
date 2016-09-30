@@ -1,7 +1,7 @@
 package checkers.client;
 
 import checkers.pojo.board.Board;
-import checkers.pojo.chess.ChessColor;
+import checkers.pojo.checker.CheckerColor;
 import checkers.pojo.step.Step;
 
 /**
@@ -12,7 +12,7 @@ public class Tester1 {
     public static void main(String[] args){
         Client client = new Client(new CheckersBot() {
 
-            public void onGameStart(ChessColor color) {
+            public void onGameStart(CheckerColor color) {
                 System.out.println(color);
             }
 

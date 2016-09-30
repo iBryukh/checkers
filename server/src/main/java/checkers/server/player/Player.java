@@ -27,7 +27,7 @@ public class Player {
             this.inputStream = new ObjectInputStream(socket.getInputStream());
             connected = true;
         } catch (Exception e){
-            endConnection();
+            endConnection(e);
         }
     }
 
@@ -35,10 +35,10 @@ public class Player {
         try {
             return (ChangeObject)inputStream.readObject();
         } catch (IOException e) {
-            endConnection();
+            endConnection(e);
             return null;
         } catch (ClassNotFoundException e) {
-            endConnection();
+            endConnection(e);
             return null;
         }
     }
@@ -51,11 +51,12 @@ public class Player {
             outputStream.writeObject(object);
             outputStream.flush();
         } catch (Exception e){
-            endConnection();
+            endConnection(e);
         }
     }
 
-    public void endConnection(){
+    public void endConnection(Exception cause){
+        cause.printStackTrace();
         connected = false;
         try {
             if (outputStream != null) {

@@ -1,4 +1,4 @@
-package checkers.pojo.chess;
+package checkers.pojo.checker;
 
 import checkers.pojo.board.Letters;
 import checkers.pojo.board.Numbers;
@@ -33,10 +33,6 @@ public class Position implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Position{");
-        sb.append("letter=").append(letter);
-        sb.append(", number=").append(number);
-        sb.append('}');
-        return sb.toString();
+        return ("{" + letter.toString() + ", " + number.getValue() + "}").replace("_", "");
     }
 }

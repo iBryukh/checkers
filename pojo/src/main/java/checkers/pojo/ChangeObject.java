@@ -1,7 +1,7 @@
 package checkers.pojo;
 
 import checkers.pojo.board.Board;
-import checkers.pojo.chess.ChessColor;
+import checkers.pojo.checker.CheckerColor;
 import checkers.pojo.step.Step;
 
 import java.io.Serializable;
@@ -17,7 +17,7 @@ public class ChangeObject implements Serializable {
 
     private String message;
 
-    private ChessColor playerColor;
+    private CheckerColor playerColor;
 
     private boolean end;
 
@@ -45,11 +45,11 @@ public class ChangeObject implements Serializable {
         this.message = message;
     }
 
-    public ChessColor getPlayerColor() {
+    public CheckerColor getPlayerColor() {
         return playerColor;
     }
 
-    public void setPlayerColor(ChessColor playerColor) {
+    public void setPlayerColor(CheckerColor playerColor) {
         this.playerColor = playerColor;
     }
 
@@ -76,7 +76,7 @@ public class ChangeObject implements Serializable {
         return this;
     }
 
-    public ChangeObject playerColor(ChessColor color){
+    public ChangeObject playerColor(CheckerColor color){
         this.playerColor = color;
         return this;
     }

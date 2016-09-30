@@ -1,12 +1,12 @@
 package checkers.pojo.board;
 
-import checkers.pojo.chess.Chess;
-import checkers.pojo.chess.ChessColor;
-import checkers.pojo.chess.ChessType;
-import checkers.pojo.chess.Position;
+import checkers.pojo.checker.*;
+import checkers.pojo.step.*;
+import checkers.pojo.validator.Validator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,27 +14,70 @@ import java.util.List;
  */
 public class Board implements Serializable {
 
-    private final List<Chess> chesses;
+    private Validator validator = new Validator();
 
-    public Board(List<Chess> chesses) {
-        this.chesses = chesses;
+    private List<Checker> checkers;
+
+    public Board() {
+        this.checkers = new ArrayList<Checker>();
+        for(Letters letter : Letters.values()){
+            for(Numbers number : Arrays.asList(Numbers._1, Numbers._2, Numbers._3)){
+                if(isCorrectPosition(letter, number)){
+                    checkers.add(new Checker(CheckerColor.WHITE, CheckerType.SIMPLE, new Position(letter, number)));
+                }
+            }
+
+            for(Numbers number : Arrays.asList(Numbers._6, Numbers._7, Numbers._8)){
+                if(isCorrectPosition(letter, number)){
+                    checkers.add(new Checker(CheckerColor.BLACK, CheckerType.SIMPLE, new Position(letter, number)));
+                }
+            }
+        }
     }
 
-    public List<Chess> getChesses() {
-        return chesses;
+    private boolean isCorrectPosition(Letters letter, Numbers number){
+        return (letter.isOdd() && number.isOdd()) || (!letter.isOdd() && !number.isOdd());
+    }
+
+    public List<Checker> getCheckers() {
+        return checkers;
+    }
+
+    /**
+     * apply user steps to board
+     * @param step - user steps
+     * @param playerColor - current client checker color
+     * @throws IllegalArgumentException - throw if step is invalid. contains description why step is invalid
+     */
+    public void apply(Step step, CheckerColor playerColor) throws IllegalArgumentException {
+        // if steps is empty then user make invalid step
+        if(step.getSteps().isEmpty())
+            throw new IllegalArgumentException(String.format("INVALID STEP ERROR: Color[%s] has empty steps list", playerColor.toString()));
+
+        Checker checker = null;
+        for(StepUnit unit : step.getSteps()){
+            checker = get(unit.getFrom());
+            if(checker == null || checker.getColor() != playerColor)
+                throw new IllegalArgumentException(String.format("INVALID STEP ERROR: No checker at %s or it has another color then player's", unit.getFrom().toString()));
+
+            if(validator.isValidStep(checkers, checker, unit)){
+
+            }
+
+        }
     }
 
     /**
      *
-     * @param color - color of chess for filtering
-     * @param type - type of chess for filtering
-     * @return list of chesses that match color and type or null if was not found any
+     * @param color - color of checker for filtering
+     * @param type - type of checker for filtering
+     * @return list of checkers that match color and type or null if was not found any
      */
-    public List<Chess> get(ChessColor color, ChessType type){
-        List<Chess> result = new ArrayList<Chess>();
-        for(Chess chess : chesses)
-            if(chess.getType().equals(type) && chess.getColor().equals(color))
-                result.add(chess);
+    public List<Checker> get(CheckerColor color, CheckerType type){
+        List<Checker> result = new ArrayList<Checker>();
+        for(Checker checker : checkers)
+            if(checker.getType().equals(type) && checker.getColor().equals(color))
+                result.add(checker);
 
         if(result.isEmpty())
             return null;
@@ -43,14 +86,14 @@ public class Board implements Serializable {
 
     /**
      *
-     * @param color - color of chess for filtering
-     * @return list of chesses that match color and type or null if was not found any
+     * @param color - color of checker for filtering
+     * @return list of checkers that match color and type or null if was not found any
      */
-    public List<Chess> get(ChessColor color){
-        List<Chess> result = new ArrayList<Chess>();
-        for(Chess chess : chesses)
-            if(chess.getColor().equals(color))
-                result.add(chess);
+    public List<Checker> get(CheckerColor color){
+        List<Checker> result = new ArrayList<Checker>();
+        for(Checker checker : checkers)
+            if(checker.getColor().equals(color))
+                result.add(checker);
 
         if(result.isEmpty())
             return null;
@@ -59,14 +102,14 @@ public class Board implements Serializable {
 
     /**
      *
-     * @param type - type of chess for filtering
-     * @return list of chesses that match color and type or null if was not found any
+     * @param type - type of checker for filtering
+     * @return list of checkers that match color and type or null if was not found any
      */
-    public List<Chess> get(ChessType type){
-        List<Chess> result = new ArrayList<Chess>();
-        for(Chess chess : chesses)
-            if(chess.getType().equals(type))
-                result.add(chess);
+    public List<Checker> get(CheckerType type){
+        List<Checker> result = new ArrayList<Checker>();
+        for(Checker checker : checkers)
+            if(checker.getType().equals(type))
+                result.add(checker);
 
         if(result.isEmpty())
             return null;
@@ -76,20 +119,20 @@ public class Board implements Serializable {
     /**
      *
      * @param p - position on board
-     * @return chess on passed position or null if was not found
+     * @return checkers on passed position or null if was not found
      */
-    public Chess get(Position p){
+    public Checker get(Position p){
         if(p == null)
             return null;
 
-        Chess chess = null;
-        for(Chess c : chesses)
+        Checker checker = null;
+        for(Checker c : checkers)
             if(c.getPosition().isSame(p)){
-                chess = c;
+                checker = c;
                 break;
             }
 
-        return chess;
+        return checker;
     }
 
 

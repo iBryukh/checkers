@@ -1,6 +1,6 @@
 package checkers.pojo.step;
 
-import checkers.pojo.chess.Position;
+import checkers.pojo.checker.Position;
 
 import java.io.Serializable;
 

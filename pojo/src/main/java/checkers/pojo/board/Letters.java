@@ -7,29 +7,33 @@ import java.io.Serializable;
  */
 public enum Letters implements Serializable {
 
-    A(true),
+    A(1),
 
-    B(false),
+    B(2),
 
-    C(true),
+    C(3),
 
-    D(false),
+    D(4),
 
-    E(true),
+    E(5),
 
-    F(false),
+    F(6),
 
-    G(true),
+    G(7),
 
-    H(false);
+    H(8);
 
-    private boolean odd;
+    private int value;
 
-    Letters(boolean odd){
-        this.odd = odd;
+    Letters(int value){
+        this.value = value;
     }
 
     public boolean isOdd(){
-        return odd;
+        return value % 2 != 0;
+    }
+
+    public int getValue(){
+        return value;
     }
 }
