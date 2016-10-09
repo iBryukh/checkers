@@ -9,6 +9,12 @@ public enum CheckerColor implements Serializable {
 
     WHITE,
 
-    BLACK
+    BLACK;
+
+    public CheckerColor opposite(){
+        if(this == WHITE)
+            return BLACK;
+        return WHITE;
+    }
 
 }

@@ -35,10 +35,10 @@ public class Player {
         try {
             return (ChangeObject)inputStream.readObject();
         } catch (IOException e) {
-            endConnection(e);
+            endConnection(null);
             return null;
         } catch (ClassNotFoundException e) {
-            endConnection(e);
+            endConnection(null);
             return null;
         }
     }
@@ -56,26 +56,24 @@ public class Player {
     }
 
     public void endConnection(Exception cause){
-        cause.printStackTrace();
+        if(cause != null)
+            cause.printStackTrace();
         connected = false;
         try {
             if (outputStream != null) {
                 outputStream.close();
             }
-        } catch (Exception e){
-        }
+        } catch (Exception e){ }
 
         try {
             if(inputStream != null)
                 inputStream.close();
-        } catch (Exception e){
-        }
+        } catch (Exception e){ }
 
         try {
             if(socket != null)
                 socket.close();
-        } catch (Exception e){
-        }
+        } catch (Exception e){ }
     }
 
     public boolean isConnected() {

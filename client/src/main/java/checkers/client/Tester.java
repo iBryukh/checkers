@@ -1,8 +1,12 @@
 package checkers.client;
 
 import checkers.pojo.board.Board;
+import checkers.pojo.board.Letters;
+import checkers.pojo.board.Numbers;
 import checkers.pojo.checker.CheckerColor;
+import checkers.pojo.checker.Position;
 import checkers.pojo.step.Step;
+import checkers.pojo.step.StepUnit;
 
 /**
  * Created by oleh_kurpiak on 16.09.2016.

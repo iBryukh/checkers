@@ -40,6 +40,27 @@ public class Checker implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Checker checker = (Checker) o;
+
+        if (color != checker.color) return false;
+        if (type != checker.type) return false;
+        return position != null ? position.equals(checker.position) : checker.position == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = color != null ? color.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Checker{");
         sb.append("color=").append(color);

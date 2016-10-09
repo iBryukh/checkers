@@ -36,4 +36,17 @@ public enum Letters implements Serializable {
     public int getValue(){
         return value;
     }
+
+    public static Letters getByValue(int value){
+        Letters result = null;
+
+        for(Letters letter : Letters.values()){
+            if(letter.getValue() == value){
+                result = letter;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

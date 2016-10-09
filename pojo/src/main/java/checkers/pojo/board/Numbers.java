@@ -37,4 +37,17 @@ public enum Numbers implements Serializable {
     public int getValue() {
         return value;
     }
+
+    public static Numbers getByValue(int value){
+        Numbers result = null;
+
+        for(Numbers number : Numbers.values()){
+            if(number.getValue() == value){
+                result = number;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

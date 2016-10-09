@@ -2,7 +2,6 @@ package checkers.pojo.board;
 
 import checkers.pojo.checker.*;
 import checkers.pojo.step.*;
-import checkers.pojo.validator.Validator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,8 +12,6 @@ import java.util.List;
  * Created by oleh_kurpiak on 16.09.2016.
  */
 public class Board implements Serializable {
-
-    private Validator validator = new Validator();
 
     private List<Checker> checkers;
 
@@ -46,25 +43,51 @@ public class Board implements Serializable {
     /**
      * apply user steps to board
      * @param step - user steps
-     * @param playerColor - current client checker color
      * @throws IllegalArgumentException - throw if step is invalid. contains description why step is invalid
      */
-    public void apply(Step step, CheckerColor playerColor) throws IllegalArgumentException {
-        // if steps is empty then user make invalid step
-        if(step.getSteps().isEmpty())
-            throw new IllegalArgumentException(String.format("INVALID STEP ERROR: Color[%s] has empty steps list", playerColor.toString()));
-
-        Checker checker = null;
+    public void apply(Step step) throws IllegalArgumentException {
+        System.out.println(checkers);
         for(StepUnit unit : step.getSteps()){
-            checker = get(unit.getFrom());
-            if(checker == null || checker.getColor() != playerColor)
-                throw new IllegalArgumentException(String.format("INVALID STEP ERROR: No checker at %s or it has another color then player's", unit.getFrom().toString()));
+            Checker checker = get(unit.getFrom());
+            int stepSize = stepSize(unit);
 
-            if(validator.isValidStep(checkers, checker, unit)){
+            if(stepSize == 1){
+                if (get(unit.getTo()) == null) {
+                    checker.setPosition(unit.getTo());
+                } else {
+                    throw new IllegalArgumentException(String.format("position %s is not empty", unit.getTo()));
+                }
+            } else if(checker.getType() == CheckerType.SIMPLE) {
+                if (stepSize == 2) {
+                    Position middlePosition = Position.middle(unit.getFrom(), unit.getTo());
+                    Checker middle = get(middlePosition);
+                    Checker atTo = get(unit.getTo());
 
+                    if (atTo == null && middle != null && middle.getColor() != checker.getColor()) {
+                        checkers.remove(middle);
+                        checker.setPosition(unit.getTo());
+                    } else {
+                        throw new IllegalArgumentException(String.format("position %s is not empty or middle position %s was not empty", unit.getTo(), middlePosition));
+                    }
+                } else {
+                    throw new IllegalArgumentException(String.format("simple checker can not move to %s position", unit.getTo()));
+                }
+            } else if(checker.getType() == CheckerType.QUEEN) {
+                // todo:
+            } else {
+                throw new IllegalArgumentException("invalid step");
             }
-
         }
+    }
+
+    /**
+     * return the number of position that checker was moved
+     *
+     * @param unit - step unit
+     * @return
+     */
+    private int stepSize(StepUnit unit){
+        return Math.abs(unit.getFrom().getLetter().getValue() - unit.getTo().getLetter().getValue());
     }
 
     /**

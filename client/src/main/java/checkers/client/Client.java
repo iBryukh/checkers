@@ -61,8 +61,11 @@ public class Client {
         while (true){
             object = read();
             if(object == null || object.isEnd()) {
-                System.out.println("END");
-                bot.onGameEnd(CONNECTION_CLOSED);
+                String message = CONNECTION_CLOSED;
+                if(object != null && object.getMessage() != null)
+                    message = object.getMessage();
+
+                bot.onGameEnd(message);
                 break;
             }
 
